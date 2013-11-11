@@ -1,0 +1,29 @@
+{
+    "name": "watoki/cfg",
+    "description": "Configuration loader",
+    "keywords": ["configuration", "watoki"],
+    "homepage": "http://github.com/watoki/cfg",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikolas Martens",
+            "email": "Nikolas.M@rtens.org",
+            "homepage": "http://rtens.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.8",
+		"watoki/factory": "*"
+    },
+    "require-dev": {
+        "watoki/scrut": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "watoki\\cfg": "src/",
+            "spec\\watoki\\cfg": ""
+        }
+    },
+    "minimum-stability": "dev"
+}
