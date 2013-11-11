@@ -22,7 +22,7 @@ class LoadUserConfigurationTest extends Specification {
     }
 
     function testEmptyFile() {
-        $this->givenTheFile_WithContent('MyConfig.php', '<?php');
+        $this->givenTheFile_WithContent('MyConfig.php', '<?php #empty');
 
         $this->whenITryToLoad('MyConfig.php');
 
