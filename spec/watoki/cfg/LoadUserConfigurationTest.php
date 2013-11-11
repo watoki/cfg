@@ -22,7 +22,7 @@ class LoadUserConfigurationTest extends Specification {
     }
 
     function testEmptyFile() {
-        $this->givenTheFile_WithContent('MyConfig.php', '');
+        $this->givenTheFile_WithContent('MyConfig.php', '<?php');
 
         $this->whenITryToLoad('MyConfig.php');
 
@@ -30,7 +30,7 @@ class LoadUserConfigurationTest extends Specification {
     }
 
     function testWrongNamespace() {
-        $this->givenTheFile_WithContent('WrongNamespace.php', 'namespace wrong\name\space; class WrongNamespace {}');
+        $this->givenTheFile_WithContent('WrongNamespace.php', '<?php namespace wrong\name\space; class WrongNamespace {}');
 
         $this->whenITryToLoad('WrongNamespace.php');
 
