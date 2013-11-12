@@ -4,7 +4,6 @@ namespace spec\watoki\cfg\fixtures;
 use watoki\cfg\Loader;
 use watoki\factory\Factory;
 use watoki\scrut\Fixture;
-use watoki\scrut\Specification;
 
 /**
  * @property FileFixture file <-
@@ -18,14 +17,6 @@ class LoaderFixture extends Fixture {
     private $exception;
 
     private $instance;
-
-    public function __construct(Specification $spec, Factory $factory) {
-        parent::__construct($spec, $factory);
-
-        if (!class_exists('name\space\BaseConfiguration')) {
-            eval ('namespace name\space; class BaseConfiguration {}');
-        }
-    }
 
     public function whenITryToLoad($fileName) {
         try {

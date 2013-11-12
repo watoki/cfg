@@ -21,12 +21,18 @@ class FileFixture extends Fixture {
             @rmdir($dir);
         };
 
-        $this->undos[] = function () use ($cleanUp) {
+        $this->spec->undos[] = function () use ($cleanUp) {
             $cleanUp();
         };
 
         $cleanUp();
         @mkdir($this->dir);
+    }
+
+    public function givenTheClass_InTheNamespace($class, $namespace) {
+        if (!class_exists($namespace . '\\' . $class)) {
+            eval ("namespace $namespace; class $class {}");
+        }
     }
 
     public function givenTheFile_WithContent($fileName, $content) {
@@ -35,6 +41,10 @@ class FileFixture extends Fixture {
 
     public function getFullPath($fileName) {
         return $this->dir . $fileName;
+    }
+
+    public function thenTheContentOf_ShouldBe($fileName, $content) {
+        $this->spec->assertEquals($content, file_get_contents($this->getFullPath($fileName)));
     }
 
 }

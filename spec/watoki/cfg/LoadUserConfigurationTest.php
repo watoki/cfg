@@ -11,6 +11,10 @@ use watoki\scrut\Specification;
  */
 class LoadUserConfigurationTest extends Specification {
 
+    protected function background() {
+        $this->file->givenTheClass_InTheNamespace('BaseConfiguration', 'name\space');
+    }
+
     function testNonExistingFile() {
         $this->loader->whenILoad('MyConfig.php');
 
