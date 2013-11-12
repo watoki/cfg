@@ -11,9 +11,9 @@ class Loader {
         $this->factory = $factory;
     }
 
-    public function loadConfiguration($baseClass, $file) {
+    public function loadConfiguration($baseClass, $file, $constructorArgs = array()) {
         if (!file_exists($file)) {
-            return $this->factory->setSingleton($baseClass, $this->factory->getInstance($baseClass));
+            return $this->factory->setSingleton($baseClass, $this->factory->getInstance($baseClass, $constructorArgs));
         }
 
         /** @noinspection PhpIncludeInspection */
@@ -28,6 +28,6 @@ class Loader {
             throw new \InvalidArgumentException("Could not find class [$userClass] in file [$file].");
         }
 
-        return $this->factory->setSingleton($baseClass, $this->factory->getInstance($userClass));
+        return $this->factory->setSingleton($baseClass, $this->factory->getInstance($userClass, $constructorArgs));
     }
 }

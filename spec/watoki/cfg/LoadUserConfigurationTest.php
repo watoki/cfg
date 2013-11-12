@@ -21,6 +21,19 @@ class LoadUserConfigurationTest extends Specification {
         $this->thenAnInstanceOf_ShouldBeTheSingletonOf('name\space\ThisConfiguration', 'name\space\BaseConfiguration');
     }
 
+    function testConstructorParameters() {
+        $this->givenTheFile_WithContent('ConfigurationWithConstructor.php', '<?php namespace name\space; class ConfigurationWithConstructor {
+            function __construct($foo) {
+                $this->foo = $foo;
+            }
+        }');
+
+        $this->whenILoadWithTheConstructorArguments('ConfigurationWithConstructor.php', array('foo' => 'bar'));
+
+        $this->thenAnInstanceOf_ShouldBeTheSingletonOf('name\space\ConfigurationWithConstructor', 'name\space\BaseConfiguration');
+        $this->thenTheInstanceShouldHaveTheProperty_WithTheValue('foo', 'bar');
+    }
+
     function testEmptyFile() {
         $this->givenTheFile_WithContent('MyConfig.php', '<?php #empty');
 
@@ -46,6 +59,8 @@ class LoadUserConfigurationTest extends Specification {
     private $exception;
 
     private $dir;
+
+    private $instance;
 
     protected function background() {
         $this->dir = __DIR__ . '/__tmp/';
@@ -88,14 +103,22 @@ class LoadUserConfigurationTest extends Specification {
     }
 
     private function whenILoad($fileName) {
+        $this->whenILoadWithTheConstructorArguments($fileName, array());
+    }
+
+    private function whenILoadWithTheConstructorArguments($fileName, $args) {
         $this->myFactory = new Factory();
         $loader = new Loader($this->myFactory);
-        $loader->loadConfiguration('name\space\BaseConfiguration', $this->dir . $fileName);
+        $loader->loadConfiguration('name\space\BaseConfiguration', $this->dir . $fileName, $args);
     }
 
     private function thenAnInstanceOf_ShouldBeTheSingletonOf($userClass, $baseClass) {
-        $object = $this->myFactory->getSingleton($baseClass);
-        $this->assertInstanceOf($userClass, $object);
+        $this->instance = $this->myFactory->getSingleton($baseClass);
+        $this->assertInstanceOf($userClass, $this->instance);
+    }
+
+    private function thenTheInstanceShouldHaveTheProperty_WithTheValue($name, $value) {
+        $this->assertEquals($value, $this->instance->$name);
     }
 
 }
