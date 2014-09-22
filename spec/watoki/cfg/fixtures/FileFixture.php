@@ -9,6 +9,10 @@ class FileFixture extends Fixture {
 
     private $dir;
 
+    /**
+     * @param Specification $spec
+     * @param Factory $factory <-
+     */
     public function __construct(Specification $spec, Factory $factory) {
         parent::__construct($spec, $factory);
         $this->dir = __DIR__ . '/__tmp/';
@@ -36,7 +40,11 @@ class FileFixture extends Fixture {
     }
 
     public function givenTheFile_WithContent($fileName, $content) {
-        file_put_contents($this->dir . $fileName, $content);
+        $fullFileName = $this->dir . $fileName;
+        if (!file_exists(dirname($fullFileName))) {
+            mkdir(dirname($fullFileName), 0777, true);
+        }
+        file_put_contents($fullFileName, $content);
     }
 
     public function getFullPath($fileName) {
