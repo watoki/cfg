@@ -7,6 +7,9 @@ class Loader {
 
     private $factory;
 
+    /**
+     * @param Factory $factory <-
+     */
     function __construct(Factory $factory) {
         $this->factory = $factory;
     }
