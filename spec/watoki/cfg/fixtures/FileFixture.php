@@ -15,7 +15,7 @@ class FileFixture extends Fixture {
      */
     public function __construct(Specification $spec, Factory $factory) {
         parent::__construct($spec, $factory);
-        $this->dir = __DIR__ . '/__tmp/';
+        $this->dir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid() . DIRECTORY_SEPARATOR;
 
         $dir = $this->dir;
         $cleanUp = function () use ($dir) {

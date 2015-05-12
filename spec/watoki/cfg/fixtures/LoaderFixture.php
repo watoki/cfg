@@ -37,7 +37,7 @@ class LoaderFixture extends Fixture {
     }
 
     public function thenAnInstanceOf_ShouldBeTheSingletonOf($userClass, $baseClass) {
-        $this->instance = $this->myFactory->getSingleton($baseClass);
+        $this->instance = $this->myFactory->getInstance($baseClass);
         $this->spec->assertInstanceOf($userClass, $this->instance);
     }
 
